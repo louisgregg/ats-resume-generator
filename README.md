@@ -9,9 +9,15 @@ cd ats-resume-generator
 python3 -m venv venv && . venv/bin/activate && pip3 install --upgrade pip && pip3 install docx docxtpl
 ```
 You should then have all the requirements (```docx``` and ```docxtpl```) installed.
-## Usage
-Run the script with:
+## Testing
+To test the script with with sample data:
 ```bash
 python3 resume_generator.py
 ```
-This will generate a document, ```sample_data.docx```, which should play nicely with the HR departments software. Edit the ```contents``` dictionary in the script to add your own name, work history, etc.
+This will generate a document, `sample_data.docx`, which should play nicely with the HR departments software.
+## Usage
+Create your own `resume.json` file with your own name, work history, etc. Then generate a word document with:
+```bash
+python3 resume_generator.py resume.json
+```
+If the `personName` field in your `resume.json` file is `John Doe` then the script with generate a file called `john_doe.docx`.

@@ -1,0 +1,85 @@
+{
+    "degrees": [
+        {
+            "GPA": "4.0",
+            "college": "Hardvard",
+            "degreeName": "MSc Computer Science",
+            "endYear": "2021",
+            "location": "USA",
+            "startYear": "2020"
+        },
+        {
+            "GPA": "4.0",
+            "college": "Hardvard",
+            "degreeName": "BSc Computer Science",
+            "endYear": "2020",
+            "location": "USA",
+            "startYear": "2016"
+        }
+    ],
+    "intro": {
+        "citizenship": "USA",
+        "email": "john@doe.com",
+        "linkedin": "linkedin/johndoe",
+        "location": "New York City, NY 11200",
+        "personName": "Sample Data",
+        "phone": "123456789",
+        "summary": "I'm a really big deal.",
+        "website": "johndoe.com"
+    },
+    "jobs": [
+        {
+            "company": "Google",
+            "endDate": "March, 2021",
+            "location": "Mountain View, California",
+            "responsibilities": [
+                "cleaning toilets",
+                "scrubbing the deck",
+                "professional networking"
+            ],
+            "startDate": "March, 2020",
+            "title": "Software Engineer"
+        },
+        {
+            "company": "Facebook",
+            "endDate": "March, 2019",
+            "location": "Menlo Park, California",
+            "responsibilities": [
+                "cleaning toilets",
+                "scrubbing the deck",
+                "professional networking"
+            ],
+            "startDate": "March, 2018",
+            "title": "Software Developer"
+        }
+    ],
+    "projectList": [
+        {
+            "code": "github.com/johndoe/gmail-codebase",
+            "description": "Big open source python project",
+            "link": "gmail.com"
+        },
+        {
+            "description": "Database engine that is very fast",
+            "link": "postgres.com"
+        },
+        {
+            "code": "github.com/johndoe/cool-stuff",
+            "description": "other cool stuff that gets you jobs"
+        },
+        {
+            "description": "Stuff without links"
+        }
+    ],
+    "skillDict": {
+        "Data": [
+            "MySQL",
+            "Excel"
+        ],
+        "Programming": [
+            "C++",
+            "Python",
+            "Rust"
+        ]
+    }
+}
