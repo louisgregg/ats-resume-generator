@@ -1,64 +1,8 @@
 from docxtpl import DocxTemplate, RichText
 import pprint
-
-# Import the template
-template = DocxTemplate('resume_template.docx')
-
-
-# define the context dictionary to feed into the template
-context = {'personName' : 'John Doe',
-'location' : 'New York City, NY 11200',
-'phone' : '123456789',
-'email' : 'john@doe.com',
-'linkedin' : 'linkedin/johndoe',
-'website' : 'johndoe.com',
-'citizenship' : 'USA',
-'introduction' : 'I\'m a really big deal.'}
-
-jobs = [
-{'title' : 'Software Engineer',
-'company' : 'Google',
-'location' : 'Mountain View, California',
-'startDate' : 'March, 2020',
-'endDate' : 'March, 2021',
-'responsibilities' : ['cleaning toilets','scrubbing the deck','professional networking']},
-{'title' : 'Software Developer',
-'company' : 'Facebook',
-'location' : 'Menlo Park, California',
-'startDate' : 'March, 2018',
-'endDate' : 'March, 2019',
-'responsibilities' : ['cleaning toilets','scrubbing the deck','professional networking']}
-]
-context['jobs'] = jobs
-
-degrees = [
-{'degreeName': 'MSc Computer Science',
-'college' : 'Hardvard',
-'location' : 'USA',
-'startYear' : '2020',
-'endYear' : '2021',
-'GPA' : '4.0'},
-{'degreeName': 'BSc Computer Science',
-'college' : 'Hardvard',
-'location' : 'USA',
-'startYear' : '2016',
-'endYear' : '2020',
-'GPA' : '4.0'}
-]
-context['degrees'] = degrees
-
-# Previous projects, including links and code
-projectList = [
-{'description': 'Big open source python project',
-'link': 'gmail.com',
-'code': 'github.com/johndoe/gmail-codebase',},
-{'description': 'Database engine that is very fast',
-'link': 'postgres.com',},
-{'description': 'other cool stuff that gets you jobs',
-'code': 'github.com/johndoe/cool-stuff'},
-{'description': 'Stuff without links',}
-]
-context['projectList'] = projectList
+import json
+import re
+import argparse
 
 # render the projectList list into RichText with embedded links
 def renderProjectLinks(projectList, template):
@@ -82,17 +26,43 @@ def renderProjectLinks(projectList, template):
             richTextString.add('.')
         projectListCombined.append(richTextString)
     return projectListCombined
-context['projects'] = renderProjectLinks(projectList, template)
 
-# Dictionary of skills keywords
-skills = {'Programming' : ['C++', 'Python', 'Rust'],
-'Data' : ['MySQL', 'Excel']}
-context['skillDict'] = skills
+def dictToDocx(context):
+    # Import the template
+    template = DocxTemplate('resume_template.docx')
 
-# For testing, pretty print the dictionary
-pp = pprint.PrettyPrinter(indent=4)
-pp.pprint(context)
+    # For testing, pretty print the dictionary
+    # pp = pprint.PrettyPrinter(indent=4)
+    # pp.pprint(context)
 
-#Render automated report
-template.render(context)
-template.save('generated_resume.docx')
+    # generate filename
+    genFilename = lambda theString, extension : re.sub( '[^0-9a-zA-Z ]+','',theString.lower()).replace(' ', '_')+'.'+extension
+
+    # Export to json file
+    # JSONFile=genFilename(context['intro']['personName'],'json')
+    # with open(JSONFile,'w') as resumeJSONFile:
+    #     json.dump(context, resumeJSONFile, indent=4)
+
+    # render links as click-able hyperlinks using the richTextString class
+    context['projects'] = renderProjectLinks(context['projectList'], template)
+
+    #Render automated report
+    docxFile=genFilename(context['intro']['personName'],'docx')
+    print("Generating resume document: {}".format(docxFile))
+    template.render(context)
+    template.save(docxFile)
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='Produce a ATS-friendly docx resume.')
+    parser.add_argument('-j','--json', type=open, nargs=1, help='path to .json file of data')
+
+    args = parser.parse_args()
+    if args.json is not None:
+        with open(args.json) as f:
+            data = json.load(f)
+        dictToDocx(data)
+    else:
+        print('Generating sample docx document from sample_data.json')
+        with open('sample_data.json') as f:
+            data = json.load(f)
+        dictToDocx(data)
