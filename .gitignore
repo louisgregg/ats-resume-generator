@@ -3,3 +3,4 @@ testing/
 venv
 .~lock.*
 generated_resume.docx
+*.json
