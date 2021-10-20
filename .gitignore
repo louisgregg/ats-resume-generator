@@ -1,7 +1,7 @@
-generated-resume.docx
 testing/
 venv
 .~lock.*
-generated_resume.docx
 *.json
+*.docx
+!resume_template.docx
 !sample_data.json
